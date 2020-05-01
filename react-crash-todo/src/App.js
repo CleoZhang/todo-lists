@@ -1,7 +1,10 @@
 import React, { Component } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import Todos from "./components/Todos";
+import About from "./components/pages/About";
 import Header from "./components/layout/Header";
 import AddTodo from "./components/AddTodo";
+import { v4 as uuid } from "uuid";
 
 import "./App.css";
 
@@ -9,17 +12,17 @@ class App extends Component {
   state = {
     todos: [
       {
-        id: 1,
+        id: uuid(),
         title: "Take out the trash",
         completed: false,
       },
       {
-        id: 2,
+        id: uuid(),
         title: "Take out the trash 2",
         completed: false,
       },
       {
-        id: 3,
+        id: uuid(),
         title: "Take out the trash 3",
         completed: false,
       },
@@ -48,7 +51,7 @@ class App extends Component {
   addTodo = (title) => {
     const newTodo = {
       // this need to be auto generated unique id
-      id: 4,
+      id: uuid(),
       title: title,
       completed: false,
     };
@@ -58,17 +61,35 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <div className="container">
-          <Header />
-          <AddTodo addTodo={this.addTodo} />
-          <Todos
-            todos={this.state.todos}
-            markComplete={this.markComplete}
-            delTodo={this.delTodo}
-          />
+      <Router>
+        <div className="App">
+          <div className="container">
+            <Header />
+            <Route
+              exact
+              path="/"
+              render={(props) => (
+                <React.Fragment>
+                  <AddTodo addTodo={this.addTodo} />
+                  <Todos
+                    todos={this.state.todos}
+                    markComplete={this.markComplete}
+                    delTodo={this.delTodo}
+                  />
+                </React.Fragment>
+              )}
+            />
+            <Route
+              path="/about"
+              render={(props) => (
+                <React.Fragment>
+                  <About />
+                </React.Fragment>
+              )}
+            />
+          </div>
         </div>
-      </div>
+      </Router>
     );
   }
 }
