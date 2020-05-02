@@ -48,7 +48,7 @@ const btnStyle = {
 };
 
 // Prop types
-Todos.propTypes = {
+TodoItem.propTypes = {
   markComplete: PropTypes.func.isRequired,
   delTodo: PropTypes.func.isRequired,
 };
